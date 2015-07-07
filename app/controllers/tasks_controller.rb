@@ -1,17 +1,17 @@
 class TasksController < ApplicationController
 
-  def people_belongs_task
-    @task = Task.find(params[:id])
+  before_action :find_task, only: [:people_belongs_task, :assign_person_to_task, :show, :update, :destroy]
 
+  def people_belongs_task
     @people_belongs_task = @task.people.ids
 
     render json: @people_belongs_task
   end
 
   def assign_person_to_task
-    @task = Task.find(params[:id])
-
     @person = Person.find(params[:person_id])
+
+    binding.pry
 
     if @task.people << @person
       @person_belongs_to_tasks = @task.people.ids
@@ -29,8 +29,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
-
     render json: @task.id
   end
 
@@ -45,8 +43,6 @@ class TasksController < ApplicationController
   end
 
   def update
-     @task = Task.find(params[:id])
-
     if @task.update(task_params)
       render json: @task
     else
@@ -55,8 +51,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
-
     @task.destroy
 
     head :no_content
@@ -65,7 +59,11 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:name, :description, :person_id, :task_id)
+    params.permit(:name, :description)
+  end
+
+  def find_task
+    @person = Task.find(params[:id])
   end
 
 end
