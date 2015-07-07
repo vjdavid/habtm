@@ -10,7 +10,7 @@ Rails.application.routes.draw do
  resources :people, except: [:edit, :new] do
    member do
      get 'tasks', to: 'people#tasks_belongs_person'
-     post 'tasks', to: 'people#create_task_to_person'
+     put 'tasks/:task_id', to: 'people#assign_task_to_person'
    end
  end
 
