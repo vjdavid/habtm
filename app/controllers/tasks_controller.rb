@@ -1,5 +1,3 @@
-require 'pry-rails'
-
 class TasksController < ApplicationController
 
   def people_belongs_task
@@ -68,10 +66,6 @@ class TasksController < ApplicationController
 
   def task_params
     params.permit(:name, :description, :person_id, :task_id)
-  end
-
-  def person_params
-    params.permit(:name, :person_id, :task_id)
   end
 
 end
